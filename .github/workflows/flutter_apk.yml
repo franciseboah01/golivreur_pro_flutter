@@ -1,4 +1,4 @@
-name: Build Flutter APK (Pro)
+name: Build Flutter APK (DEBUG)
 
 on:
   push:
@@ -22,18 +22,13 @@ jobs:
         run: |
           git clone https://github.com/flutter/flutter.git -b stable --depth 1
           echo "$PWD/flutter/bin" >> $GITHUB_PATH
+          flutter --version
 
-      - name: Verify Flutter
+      - name: Flutter doctor
         run: flutter doctor -v
 
-      - name: Get dependencies
+      - name: Install dependencies
         run: flutter pub get
 
-      - name: Build APK
-        run: flutter build apk --release
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: golivreur-pro-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+      - name: Build APK (debug)
+        run: flutter build apk --debug
