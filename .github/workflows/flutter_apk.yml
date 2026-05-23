@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Setup Java 17
@@ -18,21 +18,21 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Clone Flutter SDK
+      - name: Install Flutter
         run: |
           git clone https://github.com/flutter/flutter.git -b stable --depth 1
           echo "$PWD/flutter/bin" >> $GITHUB_PATH
 
-      - name: Flutter doctor
+      - name: Verify Flutter
         run: flutter doctor -v
 
-      - name: Install dependencies
+      - name: Get dependencies
         run: flutter pub get
 
       - name: Build APK
         run: flutter build apk --release
 
-      - name: Upload APK artifact
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: golivreur-pro-apk
